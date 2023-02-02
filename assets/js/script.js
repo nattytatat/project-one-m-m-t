@@ -3,19 +3,6 @@ var chosenPlace;
 var today = moment().format("dddd • DD/MM/YYYY • h:mm a");
 $("#myDate").text(today);
 
-
-function showPlace() {
-    $("#location-search").on("click", function (event) {
-        event.preventDefault();
-        var chosenPlace = $("#user-location").val().trim();
-        chosenPlace = chosenPlace.charAt(0).toUpperCase() + chosenPlace.slice(1);
-        // clear input field
-        $("#user-location").val("");
-        showDetails(chosenPlace);
-    })
-}
-
-
 function showDetails(chosenPlace) {
     // clearing section with chosen place weather
     $("#weather").empty();
@@ -95,23 +82,32 @@ function findLocation(userLocation) {
     }).then(function(result){
         // reassign the new lat and lon values to pass through the new map and weather query
         lat = result.results[0].geometry.location.lat;
-        lon = result.results[0].geometry.location.lon;
+        lon = result.results[0].geometry.location.lng;
 
         console.log('lat: ' + lat + 'lon: ' + lon);
         // change the map to new location
-        // theMap = new google.maps.Map(mapElement[0], {
-        //     zoom: 15,
-        //     center: {lat: lat, lng: lon},
-        // })
-        console.log(mapURL);
+        theMap = new google.maps.Map(mapElement[0], {
+            zoom: 15,
+            center: {lat: lat, lng: lon},
+            
+        })
+        
     })
 }
 
+function showPlace() {
 $('#location-search').on('click', function (event){
     event.preventDefault();
     // pass the user Location on event listener
     var userLocation = $('#user-location').val();
+    var chosenPlace = $("#user-location").val().trim();
+    chosenPlace = chosenPlace.charAt(0).toUpperCase() + chosenPlace.slice(1);
+    // clear input field
+    $("#user-location").val("");
+    showDetails(chosenPlace);
 
     // upon click, run the function - pass the variable as an argument
     findLocation(userLocation);
-})
+});
+
+}
