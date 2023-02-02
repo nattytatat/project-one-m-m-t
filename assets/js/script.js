@@ -63,7 +63,7 @@ $.ajax({
 
 });
 
-
+//comment
 // latitute and longitude variable declared outside, so they can change on page reload or when the findLocation is called
 
 var lat = 51.507351;
