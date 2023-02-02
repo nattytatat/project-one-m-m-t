@@ -1,6 +1,112 @@
 /* Map styles */
+body {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif !important;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+.my-header {
+    background-color: rgb(230, 247, 253);
+}
+
+.my-logo {
+    width: 35px;
+    height: auto;
+    padding-top: 10px;
+}
+
+h1 {
+    font-size: 24px;
+    padding-top: 5px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#myDate {
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: -20px;
+    margin-bottom: -10px;
+    letter-spacing: 1px;
+    color: rgb(83, 83, 83);
+}
+
+.my-form {
+    padding: 20px;
+}
+
+.input-header {
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+::placeholder {
+    color: rgb(91, 91, 91);
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+#user-location {
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid;
+    height: 40px;
+}
+
+#user-location:focus {
+    outline: none;
+    box-shadow: none;
+}
+.my-searchBtn {
+    border: solid 1px;
+    border-radius: 5px;
+    padding: 10px 15px;
+    text-transform: uppercase;
+    font-size: 14px;
+    background-color: rgb(176, 249, 242);
+    margin: 15px 0 15px 0;
+    color: black;
+    width: 100%;
+    letter-spacing: 1px;
+}
+
+.my-searchBtn:hover {
+    background-color: rgb(251, 206, 44);
+    border: 1px solid black;
+    box-shadow: 3px 5px black;
+}
+
+.my-searchBtn:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+    border: 1px solid black;
+    box-shadow: 3px 5px black;
+}
+
+.hr {
+    border: 0.6px solid black;
+}
+
+#tags {
+    display: inline-block;
+    border: 1px solid black;
+    justify-content:space-between;
+    align-items: center;
+    padding: 5px;
+    margin: 5px;
+    width: 90px;
+    height: 90px;
+    border-radius: 5px;
+}
 
 #map {
+    background-color: rgb(222, 222, 222);
     width: 100%;
-    height: 50vh;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    border-radius: 15px;
 }

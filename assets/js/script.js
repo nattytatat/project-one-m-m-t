@@ -1,3 +1,56 @@
+var chosenPlace;
+// adding date and time
+var today = moment().format("dddd • DD/MM/YYYY • h:mm a");
+$("#myDate").text(today);
+
+
+function showPlace() {
+    $("#location-search").on("click", function (event) {
+        event.preventDefault();
+        var chosenPlace = $("#user-location").val().trim();
+        chosenPlace = chosenPlace.charAt(0).toUpperCase() + chosenPlace.slice(1);
+        // clear input field
+        $("#user-location").val("");
+        showDetails(chosenPlace);
+    })
+}
+
+
+function showDetails(chosenPlace) {
+    // clearing section with chosen place weather
+    $("#weather").empty();
+    localStorage.setItem("chosenPlace", chosenPlace);
+    var place = localStorage.getItem("chosenPlace");
+    var placeName = $("<p id='placeName'>").text(place);
+    $("#weather").append(placeName);
+
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + chosenPlace + "&appid=e3fca67d9cc333a831026c5f07c8ba92";
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function (response) {
+        console.log(queryURL);
+
+        var tempK = response.main.temp;
+        var tempC = parseFloat(tempK - 273.15).toFixed(1);
+        var wind = response.wind.speed;
+        var humidity = response.main.humidity;
+        var iconPath = response.weather[0].icon;
+        var iconUrl = "https://openweathermap.org/img/wn/" + iconPath + ".png";
+
+        var icon = $("<img>").attr("src", iconUrl);
+        var iconTag = $("<p id='tags'>").append(icon);
+        var tempTag = $("<p id='tags'>").text("Temp: " + tempC + " °C");
+        var windTag = $("<p id='tags'>").text("Wind: " + wind + " KPH");
+        var humidityTag = $("<p id='tags'>").text("Humidity: " + humidity + "%");
+        // appending to the website
+        $("#weather").append(iconTag, tempTag, windTag, humidityTag);
+    })
+}
+
+showPlace();
+
 var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=London&appid=e3fca67d9cc333a831026c5f07c8ba92";
 
 $.ajax({
@@ -62,39 +115,3 @@ $('#location-search').on('click', function (event){
     // upon click, run the function - pass the variable as an argument
     findLocation(userLocation);
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// create on click event for search button
-// save input from search field to local storage
-
-// create function to call forecast for searched place from openweather
-// display forecast to the page

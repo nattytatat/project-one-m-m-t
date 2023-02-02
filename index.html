@@ -6,26 +6,51 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="./assets/css/styles.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    
     <!-- this asynchronously script tag allows for googlemaps js api to be used, has parameters set, including showMap() initialisation - script is defered, or executed until after the html or page is loaded-->
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkaRXjYncLalcEiFICrLb5Ccyb2gf7L7A&callback=showMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCS997QHSuTwfecLZXKUkJ0qP5im-kM88c&callback=showMap">
         </script>
     <title>Park Time?</title>
 </head>
 
 <body>
 
-    <header></header>
-    <h1></h1>
-    <!-- div container for the map, is identified for the showMap function to display here-->
-    <div id="map"></div>
-    <!--form-->
-    <div class="input-group">
-        <input type="text" placeholder="Enter a location" id="user-location">
-        <button id="location-search">Submit</button>
+    <!-- header section -->
+    <header class="text-center p-2 my-header">
+        <img src="./images/park-time-logo.png" class="align-top my-logo" alt="Park Time logo">
+        <h1>Park Time</h1>
+    </header>
+
+    <!-- search form section -->
+    <div class="container-fluid" style="max-width: 1400px">
+        <div class="row">
+            <aside class="col-lg-4 pb-3 my-form">
+                <form>
+                    <div class="form-group">
+                        <div class="input-group"></div>
+                        <input type="form-input" class="form-control" id="user-location" placeholder="Search here">
+                        <div>
+                            <button type="submit" class="btn btn-primary my-searchBtn" id="location-search">Search</button>
+                        </div>
+                    </div>
+                    <div>
+                        <p id="myDate"></p>
+                    </div>
+                    <hr class="hr" />
+                </form>
+                
+                <div id="weather"></div>
+                <div id="guidance"></div>
+            </aside>
+
+            <!-- map section -->
+            <div class="col-lg-8 pb-3 map">
+                <section id="map" class="row mt-3"></section>
+            </div>
+        </div>
     </div>
 
 
