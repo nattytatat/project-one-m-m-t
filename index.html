@@ -8,13 +8,23 @@
     <link rel="stylesheet" href="./assets/styles.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
     <title>Park Time?</title>
-    <!--<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>-->
+    <!-- this asynchronously script tag allows for googlemaps js api to be used, has parameters set, including showMap() initialisation - script is defered, or executed until after the html or page is loaded-->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkaRXjYncLalcEiFICrLb5Ccyb2gf7L7A&callback=showMap">
+        </script>
 </head>
 
 <body>
 
     <header></header>
-<h1></h1>
+    <h1></h1>
+    <!-- div container for the map, is identified for the showMap function to display here-->
+    <div id="map"></div>
+    <!--form-->
+    <div class="input-group">
+        <input type="text" placeholder="Enter a location" id="user-location">
+        <button id="location-search">Submit</button>
+    </div>
 
 
 
