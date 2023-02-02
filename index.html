@@ -5,21 +5,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- css -->
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <!-- Bootstrap - Fontawesome -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <title>Park Time</title>
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+    <!-- this asynchronously script tag allows for googlemaps js api to be used, has parameters set, including showMap() initialisation - script is defered, or executed until after the html or page is loaded-->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkaRXjYncLalcEiFICrLb5Ccyb2gf7L7A&callback=showMap">
+        </script>
+    <title>Park Time?</title>
 </head>
 
 <body>
+
+    <header></header>
+    <h1></h1>
+    <!-- div container for the map, is identified for the showMap function to display here-->
+    <div id="map"></div>
+    <!--form-->
+    <div class="input-group">
+        <input type="text" placeholder="Enter a location" id="user-location">
+        <button id="location-search">Submit</button>
+    </div>
+
+
+
 
 
     <!-- Moment.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--scripts-->
+    <script src="./assets/keys.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
 
