@@ -133,3 +133,6 @@ h1 {
     border-radius: 15px;
     margin: 0;
 }
+.modal-backdrop {
+    background-color: rgba(0,0,0,0.5);
+}

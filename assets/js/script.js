@@ -52,21 +52,12 @@ function showDetails(chosenPlace) {
     })
 }
 
-var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=London&appid=e3fca67d9cc333a831026c5f07c8ba92";
-
-$.ajax({
-    url: queryURL,
-    method: "GET"
-}).then(function (response) {
-
-    console.log(queryURL);
-    console.log(response);
-
-});
 
 // latitute and longitude variable declared outside, so they can change on page reload or when the findLocation is called
 var lat = 51.507351;
 var lon = -0.127758;
+// to pass the google places service later - or is undefined
+var service;
 
 // map function
 function showMap() {
@@ -74,7 +65,7 @@ function showMap() {
     var mapElement = $('#map');
     //create an instance of the map, passing the variable as a parameter, and then customisation objects
     var theMap = new google.maps.Map(mapElement[0], {
-        zoom: 15,
+        zoom: 11,
         center: { lat: lat, lng: lon },
     })
 }
@@ -99,12 +90,50 @@ function findLocation(chosenPlace) {
         console.log('lat: ' + lat + 'lon: ' + lon);
         // change the map to new location
         theMap = new google.maps.Map(mapElement[0], {
-            zoom: 15,
+            zoom: 13,
             center: { lat: lat, lng: lon },
+            key: mapKey
 
-        })
+        });
+
+        // enter places request for the newly created map
+        var request = {
+            //this passes both the lat and lon values - could be used for the above center object
+            location: result.results[0].geometry.location,
+            // in meters
+            radius: '4000',
+            type: 'park',
+        };
+
+        // make a call to the placesService, passing through the displayed map
+        service = new google.maps.places.PlacesService(theMap);
+        // performs a nearby search from users query - https://developers.google.com/maps/documentation/javascript/places#place_search_requests -
+        service.nearbySearch(request, callback);
 
     })
+
+    // lets call the places service for park results
+    function callback(results, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+                if (results[i].types.includes('tourist_attraction')) {
+                    createMarker(results[i].geometry.location);
+                }
+            }
+        }
+    }
+
+    function createMarker(position) {
+        // custom icon
+        var iconImage = './images/park-time-logo-scaled.png';
+
+        new google.maps.Marker({
+            position: position,
+            map: theMap,
+            icon: iconImage,
+        });
+
+    }
 }
 
 showPlace();
