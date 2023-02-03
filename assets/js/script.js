@@ -56,22 +56,31 @@ function showDetails(chosenPlace) {
 
      console.log(weatherStatus);
       if (weatherStatus == "Clouds") {
-         $("#modal-text").text("It's a cloudy day today, you might want to bring a jumper or a light jacket");
+         $("#modal-text").text("It's a cloudy day today, you might want to bring a jumper or a light jacket.");
          modal.show();
       } else if (weatherStatus == "Fog") {
-        $("#modal-text").text("It's a foggy day today, it's best to stay indoors");
+        $("#modal-text").text("It's a foggy day today, it's best to stay indoors.");
         modal.show();
       } else if (weatherStatus == "Clear") {
-        $("#modal-text").text("The sky is clear today, it's the perfect weather to go to the park");
+        $("#modal-text").text("The sky is clear today, it's the perfect weather to go to the park.");
+        modal.show();
+      } else if (weatherStatus == "Rain") {
+        $("#modal-text").text("Uh oh, it looks like rain, grab a raincoat and wellies, or stay indoors with a cuppa.");
+        modal.show();
+      } else if (weatherStatus == "Thunderstorm") {
+        $("#modal-text").text("There's a thunderstorm coming, stay home and stay safe.");
+        modal.show();
+      } else if (weatherStatus == "Drizzle") {
+        $("#modal-text").text("It's drizzling today, grab a light jacket and an umbrella.");
+        modal.show();
+      } else if (weatherStatus == "Snow") {
+        $("#modal-text").text("It's snowing, wrap up warm and go make some snow angels!");
+        modal.show();
+      } else {
+        $("#modal-text").text("Uh oh, we couldn't find weather details for your chosen location, sorry about that!");
         modal.show();
       }
-        
-     // if weather = JSON data String rain
-    
-     //     else if (weather = Sun)
-     //     $("#modal-text").text(there's gonna be sun, remmeber to wear sunscreen!)
-     //     else if (weather = wind)
-     //     $("#modal-text").text(it's a bit windy out, maybe wear a jacket)
+   
     })
 }
 
