@@ -104,7 +104,7 @@ h1 {
     margin: 5px;
     min-width: 50px;
     max-width: 90px;
-    height: 90px;
+    height: 80px;
     border-radius: 5px;
     font-size: 18px;
 }
@@ -124,7 +124,7 @@ h1 {
     justify-content: space-evenly;
     align-items: center;
     text-align: center;
-
+    margin-top: -10px;
 } 
 #map {
     background-color: rgb(222, 222, 222);
