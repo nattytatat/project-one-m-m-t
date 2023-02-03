@@ -58,6 +58,12 @@ function showDetails(chosenPlace) {
       if (weatherStatus == "Clouds") {
          $("#modal-text").text("It's a cloudy day today, you might want to bring a jumper or a light jacket");
          modal.show();
+      } else if (weatherStatus == "Fog") {
+        $("#modal-text").text("It's a foggy day today, it's best to stay indoors");
+        modal.show();
+      } else if (weatherStatus == "Clear") {
+        $("#modal-text").text("The sky is clear today, it's the perfect weather to go to the park");
+        modal.show();
       }
         
      // if weather = JSON data String rain
