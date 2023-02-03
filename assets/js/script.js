@@ -3,24 +3,21 @@ var chosenPlace;
 var today = moment().format("dddd • DD/MM/YYYY • h:mm a");
 $("#myDate").text(today);
 
-function showPlace() {
-    $('#location-search').on('click', function (event) {
-        event.preventDefault();
-        // pass the user Location on event listener
-        var chosenPlace = $("#user-location").val().trim();
-        chosenPlace = chosenPlace.charAt(0).toUpperCase() + chosenPlace.slice(1);
-        // clear input field
-        $("#user-location").val("");
-        showDetails(chosenPlace);
-        // upon click, run the function - pass the variable as an argument
-        findLocation(chosenPlace);
-    });
-}
-
 function showDetails(chosenPlace) {
     // clearing section with chosen place weather
     $("#weather").empty();
     $("#conditions").empty();
+
+    // to show modal when no location provided
+    if (chosenPlace === "") {
+        // alert("Alert");
+        $('#myModal').modal('hide');
+        return;
+    } else {
+        $('#myModal').modal('show');
+    }
+    // end of modal
+
     localStorage.setItem("chosenPlace", chosenPlace);
     var place = localStorage.getItem("chosenPlace");
     var placeName = $("<p id='placeName'>").text(place);
@@ -134,6 +131,20 @@ function findLocation(chosenPlace) {
         });
 
     }
+}
+
+function showPlace() {
+    $('#location-search').on('click', function (event) {
+        event.preventDefault();
+        // pass the user Location on event listener
+        var chosenPlace = $("#user-location").val().trim();
+        chosenPlace = chosenPlace.charAt(0).toUpperCase() + chosenPlace.slice(1);
+        // clear input field
+        $("#user-location").val("");
+        showDetails(chosenPlace);
+        // upon click, run the function - pass the variable as an argument
+        findLocation(chosenPlace);
+    });
 }
 
 showPlace();
