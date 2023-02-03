@@ -108,3 +108,9 @@ function findLocation(chosenPlace) {
 }
 
 showPlace();
+
+$('#location-search').on('click', function () {
+   modal.show();
+});
+
+var modal = $("#exampleModal")
