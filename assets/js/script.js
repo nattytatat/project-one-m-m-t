@@ -57,28 +57,28 @@ function showDetails(chosenPlace) {
        
             // if statements to show messages in modal box
             if (weatherStatus === "Clouds") {
-                $("#myModal").text("It's a cloudy day today, you might want to bring a jumper or a light jacket.");
+                $(".modal-body").text("It's a cloudy day today, you might want to bring a jumper or a light jacket.");
                 modal.show();
             } else if (weatherStatus === "Fog") {
-                $("#myModal").text("It's a foggy day today, it's best to stay indoors.");
+                $(".modal-body").text("It's a foggy day today, it's best to stay indoors.");
                 modal.show();
             } else if (weatherStatus === "Clear") {
-                $("#myModal").text("The sky is clear today, it's the perfect weather to go to the park.");
+                $(".modal-body").text("The sky is clear today, it's the perfect weather to go to the park.");
                 modal.show();
             } else if (weatherStatus === "Rain") {
-                $("#myModal").text("Uh oh, it looks like rain, grab a raincoat and wellies, or stay indoors with a cuppa.");
+                $(".modal-body").text("Uh oh, it looks like rain, grab a raincoat and wellies, or stay indoors with a cuppa.");
                 modal.show();
             } else if (weatherStatus === "Thunderstorm") {
-                $("#myModal").text("There's a thunderstorm coming, stay home and stay safe.");
+                $(".modal-body").text("There's a thunderstorm coming, stay home and stay safe.");
                 modal.show();
             } else if (weatherStatus === "Drizzle") {
-                $("#myModal").text("It's drizzling today, grab a light jacket and an umbrella.");
+                $(".modal-body").text("It's drizzling today, grab a light jacket and an umbrella.");
                 modal.show();
             } else if (weatherStatus === "Snow") {
-                $("#myModal").text("It's snowing, wrap up warm and go make some snow angels!");
+                $(".modal-body").text("It's snowing, wrap up warm and go make some snow angels!");
                 modal.show();
             } else {
-                $("#myModal").text("Uh oh, we couldn't find weather details for your chosen location, sorry about that!");
+                $(".modal-body").text("Uh oh, we couldn't find weather details for your chosen location, sorry about that!");
                 modal.show();
             }
     })
