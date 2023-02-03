@@ -1,10 +1,19 @@
-var chosenPlace;
+// var chosenPlace;
 // adding date and time
 var today = moment().format("dddd • DD/MM/YYYY • h:mm a");
 $("#myDate").text(today);
 
 //adding modal variable
 var modal = $("#myModal")
+
+function getCities() {
+    var chosenPlace = [];
+    var tempCities = localStorage.getItem("chosenPlace");
+
+    if (tempCities !== null) {
+        chosenPlace = tempCities.split(",");
+    } return chosenPlace;
+}
 
 function showDetails(chosenPlace) {
     // clearing section with chosen place weather
@@ -24,6 +33,7 @@ function showDetails(chosenPlace) {
     localStorage.setItem("chosenPlace", chosenPlace);
     var place = localStorage.getItem("chosenPlace");
     var placeName = $("<p id='placeName'>").text(place);
+
     $("#weather").append(placeName);
     // openweather API url 
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + chosenPlace + "&appid=e3fca67d9cc333a831026c5f07c8ba92";
@@ -83,18 +93,6 @@ function showDetails(chosenPlace) {
             }
     })
 }
-
-var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=London&appid=e3fca67d9cc333a831026c5f07c8ba92";
-
-$.ajax({
-    url: queryURL,
-    method: "GET"
-}).then(function (response) {
-
-    console.log(queryURL);
-    console.log(response);
-
-});
 
 // latitute and longitude variable declared outside, so they can change on page reload or when the findLocation is called
 var lat = 51.507351;
@@ -183,8 +181,18 @@ function showPlace() {
     $('#location-search').on('click', function (event) {
         event.preventDefault();
         // pass the user Location on event listener
-        var chosenPlace = $("#user-location").val().trim();
-        chosenPlace = chosenPlace.charAt(0).toUpperCase() + chosenPlace.slice(1);
+        var chosenPlace = getCities()
+        var searchPlace = $("#user-location").val().trim();
+        searchPlace = searchPlace.charAt(0).toUpperCase() + searchPlace.slice(1);
+
+        if (!chosenPlace.includes(searchPlace)) {
+            //This line pushes the new input city into the cities array
+            chosenPlace.push(searchPlace);
+            console.log(chosenPlace);
+            localStorage.setItem("chosenPlace", chosenPlace);
+            // calling renderButtons which handles the processing of our city array
+            addHistory();
+        }
         // clear input field
         $("#user-location").val("");
         showDetails(chosenPlace);
@@ -192,6 +200,23 @@ function showPlace() {
         findLocation(chosenPlace);
     });
 }
+
+function addHistory() {
+    // Check for changes in the local item and log them
+    $("#history").empty();
+    var recentCities =  getCities();
+    recentCities.forEach(function (city) {
+        var a = $("<button>");
+        // Adding a class
+        a.addClass("city-history");
+        // Adding a data-attribute with a value of the city
+        a.attr("data-name", city);
+        // Providing the button's text with a value of the city
+        a.text(city);
+        // Adding the button to the HTML
+        $("#history").append(a);
+    })
+};
 
 showPlace();
 
