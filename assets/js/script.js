@@ -27,12 +27,12 @@ function showDetails(chosenPlace) {
         var iconUrl = "https://openweathermap.org/img/wn/" + iconPath + ".png";
 
         var icon = $("<img>").attr("src", iconUrl);
-        var iconTag = $("<p id='tags'>").append(icon);
+        var iconTag = $("<p id='tags'>").append("Set-up", icon);
         var tempTag = $("<p id='tags'>").text("Temp: " + tempC + " °C");
         var windTag = $("<p id='tags'>").text("Wind: " + wind + " KPH");
         var humidityTag = $("<p id='tags'>").text("Humidity: " + humidity + "%");
         // appending to the website
-        $("#weather").append(iconTag, tempTag, windTag, humidityTag);
+        $("#conditions").append(iconTag, tempTag, windTag, humidityTag);
     })
 }
 
