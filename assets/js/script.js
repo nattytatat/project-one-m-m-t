@@ -4,7 +4,7 @@ var today = moment().format("dddd • DD/MM/YYYY • h:mm a");
 $("#myDate").text(today);
 
 //adding modal variable
-var modal = $("#exampleModal")
+var modal = $("#myModal")
 
 function showPlace() {
     $('#location-search').on('click', function (event) {
@@ -44,6 +44,7 @@ function showDetails(chosenPlace) {
         var iconPath = response.weather[0].icon;
         var iconUrl = "https://openweathermap.org/img/wn/" + iconPath + ".png";
         var weatherStatus = response.weather[0].main;
+        console.log(weatherStatus)
         // creating image and paragraph tags for weather conditions
         var icon = $("<img>").attr("src", iconUrl);
         var iconTag = $("<p id='tags'>").append("Set-up", icon);
@@ -53,47 +54,35 @@ function showDetails(chosenPlace) {
 
         // appending to the website
         $("#conditions").append(iconTag, tempTag, windTag, humidityTag);
-
-        // if statements to show messages in modal box
-      if (weatherStatus == "Clouds") {
-         $("#modal-text").text("It's a cloudy day today, you might want to bring a jumper or a light jacket.");
-         modal.show();
-      } else if (weatherStatus == "Fog") {
-        $("#modal-text").text("It's a foggy day today, it's best to stay indoors.");
-        modal.show();
-      } else if (weatherStatus == "Clear") {
-        $("#modal-text").text("The sky is clear today, it's the perfect weather to go to the park.");
-        modal.show();
-      } else if (weatherStatus == "Rain") {
-        $("#modal-text").text("Uh oh, it looks like rain, grab a raincoat and wellies, or stay indoors with a cuppa.");
-        modal.show();
-      } else if (weatherStatus == "Thunderstorm") {
-        $("#modal-text").text("There's a thunderstorm coming, stay home and stay safe.");
-        modal.show();
-      } else if (weatherStatus == "Drizzle") {
-        $("#modal-text").text("It's drizzling today, grab a light jacket and an umbrella.");
-        modal.show();
-      } else if (weatherStatus == "Snow") {
-        $("#modal-text").text("It's snowing, wrap up warm and go make some snow angels!");
-        modal.show();
-      } else {
-        $("#modal-text").text("Uh oh, we couldn't find weather details for your chosen location, sorry about that!");
-        modal.show();
-      }
+       
+            // if statements to show messages in modal box
+            if (weatherStatus === "Clouds") {
+                $("#myModal").text("It's a cloudy day today, you might want to bring a jumper or a light jacket.");
+                modal.show();
+            } else if (weatherStatus === "Fog") {
+                $("#myModal").text("It's a foggy day today, it's best to stay indoors.");
+                modal.show();
+            } else if (weatherStatus === "Clear") {
+                $("#myModal").text("The sky is clear today, it's the perfect weather to go to the park.");
+                modal.show();
+            } else if (weatherStatus === "Rain") {
+                $("#myModal").text("Uh oh, it looks like rain, grab a raincoat and wellies, or stay indoors with a cuppa.");
+                modal.show();
+            } else if (weatherStatus === "Thunderstorm") {
+                $("#myModal").text("There's a thunderstorm coming, stay home and stay safe.");
+                modal.show();
+            } else if (weatherStatus === "Drizzle") {
+                $("#myModal").text("It's drizzling today, grab a light jacket and an umbrella.");
+                modal.show();
+            } else if (weatherStatus === "Snow") {
+                $("#myModal").text("It's snowing, wrap up warm and go make some snow angels!");
+                modal.show();
+            } else {
+                $("#myModal").text("Uh oh, we couldn't find weather details for your chosen location, sorry about that!");
+                modal.show();
+            }
     })
 }
-
-var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=London&appid=e3fca67d9cc333a831026c5f07c8ba92";
-
-$.ajax({
-    url: queryURL,
-    method: "GET"
-}).then(function (response) {
-
-    console.log(queryURL);
-    console.log(response);
-
-});
 
 // latitute and longitude variable declared outside, so they can change on page reload or when the findLocation is called
 var lat = 51.507351;
@@ -139,3 +128,8 @@ function findLocation(chosenPlace) {
 }
 
 showPlace();
+
+// local storage overrides each time, data should persist
+$('#showModal').on('click', function (event) {
+    modal.hide()
+})
