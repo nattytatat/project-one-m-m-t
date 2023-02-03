@@ -126,6 +126,7 @@ h1 {
     text-align: center;
     margin-top: -10px;
 } 
+
 #map {
     background-color: rgb(222, 222, 222);
     width: 100%;
@@ -133,6 +134,24 @@ h1 {
     border-radius: 15px;
     margin: 0;
 }
+
 .modal-backdrop {
     background-color: rgba(0,0,0,0.5);
+    opacity: 0%;
+}
+
+.modal-content {
+    background-color: rgb(246, 246, 246);
+}
+
+.modal-footer {
+    text-align: center;
+}
+
+.modalBtn {
+    background-color: black;
+    opacity: 100%;
+    width: 150px;
+    display: flex;
+    justify-content: space-evenly;
 }
