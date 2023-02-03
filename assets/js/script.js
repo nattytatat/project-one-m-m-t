@@ -3,6 +3,9 @@ var chosenPlace;
 var today = moment().format("dddd • DD/MM/YYYY • h:mm a");
 $("#myDate").text(today);
 
+//adding modal variable
+var modal = $("#exampleModal")
+
 function showPlace() {
     $('#location-search').on('click', function (event) {
         event.preventDefault();
@@ -40,6 +43,7 @@ function showDetails(chosenPlace) {
         var humidity = response.main.humidity;
         var iconPath = response.weather[0].icon;
         var iconUrl = "https://openweathermap.org/img/wn/" + iconPath + ".png";
+        var weatherStatus = response.weather[0].main;
         // creating image and paragraph tags for weather conditions
         var icon = $("<img>").attr("src", iconUrl);
         var iconTag = $("<p id='tags'>").append("Set-up", icon);
@@ -49,6 +53,19 @@ function showDetails(chosenPlace) {
 
         // appending to the website
         $("#conditions").append(iconTag, tempTag, windTag, humidityTag);
+
+     console.log(weatherStatus);
+      if (weatherStatus == "Clouds") {
+         $("#modal-text").text("It's a cloudy day today, you might want to bring a jumper or a light jacket");
+         modal.show();
+      }
+        
+     // if weather = JSON data String rain
+    
+     //     else if (weather = Sun)
+     //     $("#modal-text").text(there's gonna be sun, remmeber to wear sunscreen!)
+     //     else if (weather = wind)
+     //     $("#modal-text").text(it's a bit windy out, maybe wear a jacket)
     })
 }
 
@@ -108,9 +125,3 @@ function findLocation(chosenPlace) {
 }
 
 showPlace();
-
-$('#location-search').on('click', function () {
-   modal.show();
-});
-
-var modal = $("#exampleModal")
