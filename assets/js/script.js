@@ -54,7 +54,7 @@ function showDetails(chosenPlace) {
         // appending to the website
         $("#conditions").append(iconTag, tempTag, windTag, humidityTag);
 
-     console.log(weatherStatus);
+        // if statements to show messages in modal box
       if (weatherStatus == "Clouds") {
          $("#modal-text").text("It's a cloudy day today, you might want to bring a jumper or a light jacket.");
          modal.show();
@@ -80,7 +80,6 @@ function showDetails(chosenPlace) {
         $("#modal-text").text("Uh oh, we couldn't find weather details for your chosen location, sorry about that!");
         modal.show();
       }
-   
     })
 }
 
