@@ -138,6 +138,8 @@ h1 {
 .modal-backdrop {
     background-color: rgba(0,0,0,0.5);
     opacity: 0%;
+    /* have to place the backdrop behind the content otherwise it stops any further use of the page*/
+    z-index: -1;
 }
 
 .modal-content {
