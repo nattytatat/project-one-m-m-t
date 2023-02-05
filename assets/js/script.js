@@ -2,14 +2,16 @@ var chosenPlace;
 // adding date and time
 var today = moment().format("dddd • DD/MM/YYYY • h:mm a");
 $("#myDate").text(today);
+var theYear = moment().format('YYYY');
+$('.footer-content').append(theYear);
 
 // local storage set outside the function to prevent it running the same for each button
 var savedPlaces = JSON.parse(localStorage.getItem("chosenPlace")) || [];
 
 // adding modal variable
-var modal = $("#myModal")
+var modal = $("#myModal");
 
-function showDetails(chosenPlace) {
+function showDetails(chosenPlace, getGif) {
     // clearing section with chosen place weather
     $("#weather").empty();
     $("#conditions").empty();
@@ -42,44 +44,42 @@ function showDetails(chosenPlace) {
         // appending to the website
         $("#conditions").append(iconTag, tempTag, windTag, humidityTag);
 
-        // to show modal when no location provided
-        if (chosenPlace === "") {
-            // alert("Alert");
-            $('#myModal').modal('hide');
-            return;
-        } else {
-            $('#myModal').modal('show');
-        }
-        // end of modal
+        if (!chosenPlace) {
 
-        // if statements to show messages in modal box
-        if (weatherStatus === "Clouds") {
-            $(".modal-body").text("It's a cloudy day today, you might want to bring a jumper or a light jacket.");
-            modal.show();
-        } else if (weatherStatus === "Fog") {
-            $(".modal-body").text("It's a foggy day today, it's best to stay indoors.");
-            modal.show();
-        } else if (weatherStatus === "Clear") {
-            $(".modal-body").text("The sky is clear today, it's the perfect weather to go to the park.");
-            modal.show();
-        } else if (weatherStatus === "Rain") {
-            $(".modal-body").text("Uh oh, it looks like rain, grab a raincoat and wellies, or stay indoors with a cuppa.");
-            modal.show();
-        } else if (weatherStatus === "Thunderstorm") {
-            $(".modal-body").text("There's a thunderstorm coming, stay home and stay safe.");
-            modal.show();
-        } else if (weatherStatus === "Drizzle") {
-            $(".modal-body").text("It's drizzling today, grab a light jacket and an umbrella.");
-            modal.show();
-        } else if (weatherStatus === "Snow") {
-            $(".modal-body").text("It's snowing, wrap up warm and go make some snow angels!");
-            modal.show();
-        } else if (weatherStatus === "") {
-            $(".modal-body").text("Uh oh, this field is blank, please enter your chosen location");
-            modal.show();
+            // alert("Alert");
+            $('#myModalError').modal('hide');
+            return;
+
         } else {
-            $(".modal-body").text("Uh oh, we couldn't find weather details for your chosen location, sorry about that!");
-            modal.show();
+            // if statements to show messages in modal box
+            if (weatherStatus === "Clouds") {
+                $(".modal-body").text("It's a cloudy day today, you might want to bring a jumper or a light jacket.");
+                modal.show();
+            } else if (weatherStatus === "Fog") {
+                $(".modal-body").text("It's a foggy day today, it's best to stay indoors.");
+                modal.show();
+            } else if (weatherStatus === "Clear") {
+                $(".modal-body").text("The sky is clear today, it's the perfect weather to go to the park.");
+                modal.show();
+            } else if (weatherStatus === "Rain") {
+                $(".modal-body").text("Uh oh, it looks like rain, grab a raincoat and wellies, or stay indoors with a cuppa.");
+                modal.show();
+            } else if (weatherStatus === "Thunderstorm") {
+                $(".modal-body").text("There's a thunderstorm coming, stay home and stay safe.");
+                modal.show();
+            } else if (weatherStatus === "Drizzle") {
+                $(".modal-body").text("It's drizzling today, grab a light jacket and an umbrella.");
+                modal.show();
+            } else if (weatherStatus === "Snow") {
+                $(".modal-body").text("It's snowing, wrap up warm and go make some snow angels!");
+                modal.show();
+            } else if (weatherStatus === "") {
+                $(".modal-body").text("Uh oh, this field is blank, please enter your chosen location");
+                modal.show();
+            } else {
+                $(".modal-body").text("Uh oh, we couldn't find weather details for your chosen location, sorry about that!");
+                modal.show();
+            }
         }
     })
 }
@@ -205,26 +205,35 @@ function showPlace() {
         var chosenPlace = $("#user-location").val().trim();
         chosenPlace = chosenPlace.charAt(0).toUpperCase() + chosenPlace.slice(1);
 
-        // to show modal when no location provided
         if (chosenPlace === "") {
             // alert("Alert");
-            $('#myModal').modal('hide');
+            $('#myModalError').modal('hide');
             return;
         } else {
-            $('#myModal').modal('show');
+            $('#myModalError').modal('show');
         }
         // end of modal
-
         // Need to add condition - if both results are valid then run - if not, return to empty input and error message - 'please enter a valid location'
         showDetails(chosenPlace);
         // upon click, run the function - pass the variable as an argument
         findLocation(chosenPlace);
 
-
         // clear input field
         $("#user-location").val("");
+        $('.error-text').empty();
 
         localStorage.setItem("chosenPlace", JSON.stringify(chosenPlace));
+
+        var a = $("<button>");
+        // Adding a class
+        a.addClass("city-history");
+        // Adding a data-attribute with a value of the city
+        a.attr("data-inline = true");
+        // Providing the button's text with a value of the city
+        a.text(chosenPlace);
+        // Adding the button to the HTML
+        $("#search-history").append(a);
+    
     });
 }
 
