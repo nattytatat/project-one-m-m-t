@@ -2,14 +2,16 @@ var chosenPlace;
 // adding date and time
 var today = moment().format("dddd • DD/MM/YYYY • h:mm a");
 $("#myDate").text(today);
+var theYear = moment().format('YYYY');
+$('.footer-content').append(theYear);
 
 // local storage set outside the function to prevent it running the same for each button
 var savedPlaces = JSON.parse(localStorage.getItem("chosenPlace")) || [];
 
 // adding modal variable
-var modal = $("#myModalError")
+var modal = $("#myModal");
 
-function showDetails(chosenPlace) {
+function showDetails(chosenPlace, getGif) {
     // clearing section with chosen place weather
     $("#weather").empty();
     $("#conditions").empty();
@@ -42,17 +44,29 @@ function showDetails(chosenPlace) {
 
         // appending to the website
         $("#conditions").append(iconTag, tempTag, windTag, humidityTag);
+        
+        addGif(weatherStatus);
+        
+        // gif creator
+        function addGif(weatherStatus, message){
+            // use the weatherQuery from openweather map and pass to new search term
+            var searchQuery = weatherStatus;
+            var getGifURL = "https://api.giphy.com/v1/gifs/search?api_key=BPd0QG7nbi7fxVY0KXbCN3Lg4OEQ0YNZ&q=" + searchQuery + "&limit=1&offset=0&rating=g&lang=en";
 
-        if (!chosenPlace) {
-
-            // alert("Alert");
-            $('#myModalError').modal('hide');
-            return;
-
-        } else {
+            $.ajax({
+                url: getGifURL,
+                method: 'GET'
+            }).then (function(result){
+                var gifUrl = result.data[0].images.original.url;
+                var gifImage = $('<img>').attr('src', gifUrl);
+                $(".modal-body").prepend(gifImage);
+                $(".modal-body").text(message);
+            })
+        }
             // if statements to show messages in modal box
             if (weatherStatus === "Clouds") {
-                $(".modal-body").text("It's a cloudy day today, you might want to bring a jumper or a light jacket.");
+                // $(".modal-body").text("It's a cloudy day today, you might want to bring a jumper or a light jacket.");
+                addGif(weatherStatus, "It's a cloudy day today, you might want to bring a jumper or a light jacket.");
                 modal.show();
             } else if (weatherStatus === "Fog") {
                 $(".modal-body").text("It's a foggy day today, it's best to stay indoors.");
@@ -79,7 +93,7 @@ function showDetails(chosenPlace) {
                 $(".modal-body").text("Uh oh, we couldn't find weather details for your chosen location, sorry about that!");
                 modal.show();
             }
-        }
+        
     })
 
 }
@@ -205,15 +219,22 @@ function showPlace() {
         var chosenPlace = $("#user-location").val().trim();
         chosenPlace = chosenPlace.charAt(0).toUpperCase() + chosenPlace.slice(1);
 
-        // to show modal when no location provided
+        // // to show modal when no location provided
+        // if (chosenPlace === "") {
+        //     // alert("Alert");
+        //     $('#myModalError').modal('hide');
+        //     return;
+        // } else {
+        //     $('#myModalError').modal('show');
+        // }
+        // // end of modal
+
         if (chosenPlace === "") {
-            // alert("Alert");
-            $('#myModalError').modal('hide');
+            var error = $('<p class="error-text text-danger m-0">');
+            error.text('Please enter a valid location');
+            $('#user-location').after(error);
             return;
-        } else {
-            $('#myModalError').modal('show');
-        }
-        // end of modal
+        } 
 
 
         // Need to add condition - if both results are valid then run - if not, return to empty input and error message - 'please enter a valid location'
@@ -221,9 +242,9 @@ function showPlace() {
         // upon click, run the function - pass the variable as an argument
         findLocation(chosenPlace);
 
-
         // clear input field
         $("#user-location").val("");
+        $('.error-text').empty();
 
         localStorage.setItem("chosenPlace", JSON.stringify(chosenPlace));
 
