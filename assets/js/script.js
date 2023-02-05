@@ -1,4 +1,4 @@
-// var chosenPlace;
+var chosenPlace;
 // adding date and time
 var today = moment().format("dddd • DD/MM/YYYY • h:mm a");
 $("#myDate").text(today);
@@ -7,26 +7,14 @@ $("#myDate").text(today);
 var savedPlaces = JSON.parse(localStorage.getItem("chosenPlace")) || [];
 
 // adding modal variable
-var modal = $("#myModalError")
+var modal = $("#myModal")
 
 function showDetails(chosenPlace) {
     // clearing section with chosen place weather
     $("#weather").empty();
     $("#conditions").empty();
 
-    // to show modal when no location provided
-    if (chosenPlace === "") {
-        // alert("Alert");
-        $('#myModal').modal('hide');
-        return;
-    } else {
-        $('#myModal').modal('show');
-    }
-    // end of modal
-
-    localStorage.setItem("chosenPlace", chosenPlace);
-    var place = localStorage.getItem("chosenPlace");
-    var placeName = $("<p id='placeName'>").text(place);
+    var placeName = $("<p id='placeName'>").text(chosenPlace);
     $("#weather").append(placeName);
     // openweather API url 
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + chosenPlace + "&appid=e3fca67d9cc333a831026c5f07c8ba92";
@@ -44,7 +32,6 @@ function showDetails(chosenPlace) {
         var iconPath = response.weather[0].icon;
         var iconUrl = "https://openweathermap.org/img/wn/" + iconPath + ".png";
         var weatherStatus = response.weather[0].main;
-        console.log(weatherStatus)
         // creating image and paragraph tags for weather conditions
         var icon = $("<img>").attr("src", iconUrl);
         var iconTag = $("<p id='tags'>").append("Set-up", icon);
@@ -55,45 +42,46 @@ function showDetails(chosenPlace) {
         // appending to the website
         $("#conditions").append(iconTag, tempTag, windTag, humidityTag);
 
-        if (!chosenPlace) {
-
+        // to show modal when no location provided
+        if (chosenPlace === "") {
             // alert("Alert");
-            $('#myModalError').modal('hide');
+            $('#myModal').modal('hide');
             return;
-
         } else {
-            // if statements to show messages in modal box
-            if (weatherStatus === "Clouds") {
-                $(".modal-body").text("It's a cloudy day today, you might want to bring a jumper or a light jacket.");
-                modal.show();
-            } else if (weatherStatus === "Fog") {
-                $(".modal-body").text("It's a foggy day today, it's best to stay indoors.");
-                modal.show();
-            } else if (weatherStatus === "Clear") {
-                $(".modal-body").text("The sky is clear today, it's the perfect weather to go to the park.");
-                modal.show();
-            } else if (weatherStatus === "Rain") {
-                $(".modal-body").text("Uh oh, it looks like rain, grab a raincoat and wellies, or stay indoors with a cuppa.");
-                modal.show();
-            } else if (weatherStatus === "Thunderstorm") {
-                $(".modal-body").text("There's a thunderstorm coming, stay home and stay safe.");
-                modal.show();
-            } else if (weatherStatus === "Drizzle") {
-                $(".modal-body").text("It's drizzling today, grab a light jacket and an umbrella.");
-                modal.show();
-            } else if (weatherStatus === "Snow") {
-                $(".modal-body").text("It's snowing, wrap up warm and go make some snow angels!");
-                modal.show();
-            } else if (weatherStatus === "") {
-                $(".modal-body").text("Uh oh, this field is blank, please enter your chosen location");
-                modal.show();
-            } else {
-                $(".modal-body").text("Uh oh, we couldn't find weather details for your chosen location, sorry about that!");
-                modal.show();
-            }
+            $('#myModal').modal('show');
+        }
+        // end of modal
+
+        // if statements to show messages in modal box
+        if (weatherStatus === "Clouds") {
+            $(".modal-body").text("It's a cloudy day today, you might want to bring a jumper or a light jacket.");
+            modal.show();
+        } else if (weatherStatus === "Fog") {
+            $(".modal-body").text("It's a foggy day today, it's best to stay indoors.");
+            modal.show();
+        } else if (weatherStatus === "Clear") {
+            $(".modal-body").text("The sky is clear today, it's the perfect weather to go to the park.");
+            modal.show();
+        } else if (weatherStatus === "Rain") {
+            $(".modal-body").text("Uh oh, it looks like rain, grab a raincoat and wellies, or stay indoors with a cuppa.");
+            modal.show();
+        } else if (weatherStatus === "Thunderstorm") {
+            $(".modal-body").text("There's a thunderstorm coming, stay home and stay safe.");
+            modal.show();
+        } else if (weatherStatus === "Drizzle") {
+            $(".modal-body").text("It's drizzling today, grab a light jacket and an umbrella.");
+            modal.show();
+        } else if (weatherStatus === "Snow") {
+            $(".modal-body").text("It's snowing, wrap up warm and go make some snow angels!");
+            modal.show();
+        } else if (weatherStatus === "") {
+            $(".modal-body").text("Uh oh, this field is blank, please enter your chosen location");
+            modal.show();
+        } else {
+            $(".modal-body").text("Uh oh, we couldn't find weather details for your chosen location, sorry about that!");
+            modal.show();
         }
     })
-
 }
 
 // latitute and longitude variable declared outside, so they can change on page reload or when the findLocation is called
@@ -173,7 +161,7 @@ function findLocation(chosenPlace) {
                     // name of the first park returned, which we take out and use outside the loop - declare variable outside or not defined
                     if (!firstPark) {
                         firstPark = results[i].name;
-                    } 
+                    }
 
                 }
             }
@@ -216,8 +204,18 @@ function showPlace() {
         // pass the user Location on event listener
         var chosenPlace = $("#user-location").val().trim();
         chosenPlace = chosenPlace.charAt(0).toUpperCase() + chosenPlace.slice(1);
-        // clear input field
-        $("#user-location").val("");
+
+        // to show modal when no location provided
+        if (chosenPlace === "") {
+            // alert("Alert");
+            $('#myModal').modal('hide');
+            return;
+        } else {
+            $('#myModal').modal('show');
+        }
+        // end of modal
+
+        // Need to add condition - if both results are valid then run - if not, return to empty input and error message - 'please enter a valid location'
         showDetails(chosenPlace);
         // upon click, run the function - pass the variable as an argument
         findLocation(chosenPlace);
@@ -227,28 +225,8 @@ function showPlace() {
         $("#user-location").val("");
 
         localStorage.setItem("chosenPlace", JSON.stringify(chosenPlace));
-
-
-
     });
 }
-
-function addHistory() {
-    // Check for changes in the local item and log them
-    $("#history").empty();
-    var recentCities =  getCities();
-    recentCities.forEach(function (city) {
-        var a = $("<button>");
-        // Adding a class
-        a.addClass("city-history");
-        // Adding a data-attribute with a value of the city
-        a.attr("data-name", city);
-        // Providing the button's text with a value of the city
-        a.text(city);
-        // Adding the button to the HTML
-        $("#history").append(a);
-    })
-};
 
 showPlace();
 
