@@ -84,11 +84,6 @@ function showDetails(chosenPlace) {
 
 }
 
-
-$('#myModal').on('hidden.bs.modal', function () {
-    $(this).find('input').val('');
-  })
-
 // latitute and longitude variable declared outside, so they can change on page reload or when the findLocation is called
 var lat = 51.507351;
 var lon = -0.127758;
