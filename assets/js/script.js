@@ -45,11 +45,11 @@ function showDetails(chosenPlace) {
 
         if (!chosenPlace) {
 
-               // alert("Alert");
+            // alert("Alert");
             $('#myModalError').modal('hide');
             return;
 
-        } else  {
+        } else {
             // if statements to show messages in modal box
             if (weatherStatus === "Clouds") {
                 $(".modal-body").text("It's a cloudy day today, you might want to bring a jumper or a light jacket.");
@@ -145,30 +145,54 @@ function findLocation(chosenPlace) {
 
     })
 
+    var firstPark;
+
     // lets call the places service for park results
     function callback(results, status) {
         // This checks the status of the places API rquest
         if (status == google.maps.places.PlacesServiceStatus.OK) {
+
             // return the results of each park that includes a tourist attraction value from the types object
             for (var i = 0; i < results.length; i++) {
                 if (results[i].types.includes('tourist_attraction')) {
-                    // call createMarker function and parse result
-                    createMarker(results[i].geometry.location);
+                    // call createMarker function and locations and results to the function
+                    createMarker(results[i].geometry.location, results[i]);
+
+                    // name of the first park returned, which we take out and use outside the loop - declare variable outside or not defined
+                    if (!firstPark) {
+                        firstPark = results[i].name;
+                    } 
+
                 }
             }
+            $('#park-container').empty();
+            // Print First park result name
+            var thePark = $('<div id="park-container" class="text-center pt-5 pb-2">');
+            thePark.text('The closest park to this location is ' + firstPark);
+            $('#conditions').after(thePark);
         }
     }
 
-    function createMarker(position) {
+    function createMarker(position, results) {
         // custom icon
         var iconImage = './images/park-time-logo-scaled.png';
         // creates a new marker object for the map
-        new google.maps.Marker({
+        var marker = new google.maps.Marker({
             // position of the marker comes from the park lat and lon values in the callback
             position: position,
             map: theMap,
             icon: iconImage,
         });
+
+        // call the constructor
+        var infoWindow = new google.maps.InfoWindow({
+            content: results.name
+        });
+
+        // use addListener method for the marker
+        marker.addListener('click', function () {
+            infoWindow.open(theMap, marker);
+        })
 
     }
 
@@ -180,7 +204,7 @@ function showPlace() {
         // pass the user Location on event listener
         var chosenPlace = $("#user-location").val().trim();
         chosenPlace = chosenPlace.charAt(0).toUpperCase() + chosenPlace.slice(1);
-        
+
         // to show modal when no location provided
         if (chosenPlace === "") {
             // alert("Alert");
@@ -197,7 +221,7 @@ function showPlace() {
         // upon click, run the function - pass the variable as an argument
         findLocation(chosenPlace);
 
-        
+
         // clear input field
         $("#user-location").val("");
 
