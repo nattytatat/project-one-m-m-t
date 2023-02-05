@@ -227,7 +227,7 @@ function showPlace() {
 
         var a = $("<button>");
         // Adding a class
-        a.addClass("city-history");
+        a.addClass("place-history");
         // Adding a data-attribute with a value of the city
         a.attr("data-inline = true");
         // Providing the button's text with a value of the city
