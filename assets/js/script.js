@@ -236,12 +236,6 @@ function showPlace() {
         $("#search-history").append(a);
 
         clearButton.show();
-        
-        $("#clear-button").on("click", function() {
-           window.localStorage.clear();
-           $("#history").empty();
-            });
-    
     });
 }
 
@@ -251,3 +245,9 @@ showPlace();
 $('#showModal').on('click', function (event) {
     modal.hide()
 })
+
+//clicking this button clears search history and clears local storage
+$("#clear-button").on("click", function() {
+    window.localStorage.clear();
+    $(".city-history").hide();
+     });
