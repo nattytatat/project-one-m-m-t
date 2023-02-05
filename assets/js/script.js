@@ -4,7 +4,8 @@ var today = moment().format("dddd • DD/MM/YYYY • h:mm a");
 $("#myDate").text(today);
 var theYear = moment().format('YYYY');
 $('.footer-content').append(theYear);
-
+var clearButton = $("#clear-button");
+clearButton.hide();
 // local storage set outside the function to prevent it running the same for each button
 var savedPlaces = JSON.parse(localStorage.getItem("chosenPlace")) || [];
 
@@ -233,6 +234,13 @@ function showPlace() {
         a.text(chosenPlace);
         // Adding the button to the HTML
         $("#search-history").append(a);
+
+        clearButton.show();
+        
+        $("#clear-button").on("click", function() {
+           window.localStorage.clear();
+           $("#history").empty();
+            });
     
     });
 }
