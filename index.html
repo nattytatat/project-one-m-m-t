@@ -20,29 +20,52 @@
     <!-- header section -->
     <header class="text-center p-2 my-header">
         <img src="./images/park-time-logo.png" class="align-top my-logo" alt="Park Time logo">
-        <h1>Park Time</h1>
+        <h1 class="mb-4">Park Time</h1>
+        <p class="text-center">Use this app to find a park near you and check the current weather conditions.<br>
+            Not sure what to do next? Our park weather tips can guide you!</p>
+        <p><Strong>Search using the form below</strong></p>
     </header>
 
-  
-  <!-- Modal -->
-  <div class="modal" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">⚠️  Alert </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div id="#modal-text" class="modal-body">
-             You need to add a location.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="showModal" data-dismiss="modal">OK</button>
+
+    <!-- Error Modal -->
+    <div class="modal" id="myModalError">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">⚠️ Alert </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="#modal-text" class="modal-body">
+                    You need to add a location.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="showModalError" data-dismiss="modal">OK</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <!-- Weather Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">⚠️ Alert </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="#modal-text" class="modal-body">
+                    You need to add a location.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="showModal" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- search form section -->
     <div class="container-fluid" style="max-width: 1400px">
@@ -51,7 +74,7 @@
                 <form>
                     <div class="form-group">
                         <div class="input-group"></div>
-                        <input type="form-input" class="form-control" id="user-location" placeholder="Search here">
+                        <input type="form-input" class="form-control" id="user-location" placeholder="Type a location here">
                         <div>
                             <button type="submit" class="btn btn-primary my-searchBtn" id="location-search"
                                 data-toggle="modal" data-target="#myModal">Search</button>

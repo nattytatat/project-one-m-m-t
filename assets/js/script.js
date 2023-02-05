@@ -3,17 +3,11 @@
 var today = moment().format("dddd • DD/MM/YYYY • h:mm a");
 $("#myDate").text(today);
 
-//adding modal variable
-var modal = $("#myModal")
+// local storage set outside the function to prevent it running the same for each button
+var savedPlaces = JSON.parse(localStorage.getItem("chosenPlace")) || [];
 
-function getCities() {
-    var chosenPlace = [];
-    var tempCities = localStorage.getItem("chosenPlace");
-
-    if (tempCities !== null) {
-        chosenPlace = tempCities.split(",");
-    } return chosenPlace;
-}
+// adding modal variable
+var modal = $("#myModalError")
 
 function showDetails(chosenPlace) {
     // clearing section with chosen place weather
@@ -33,7 +27,6 @@ function showDetails(chosenPlace) {
     localStorage.setItem("chosenPlace", chosenPlace);
     var place = localStorage.getItem("chosenPlace");
     var placeName = $("<p id='placeName'>").text(place);
-
     $("#weather").append(placeName);
     // openweather API url 
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + chosenPlace + "&appid=e3fca67d9cc333a831026c5f07c8ba92";
@@ -61,7 +54,14 @@ function showDetails(chosenPlace) {
 
         // appending to the website
         $("#conditions").append(iconTag, tempTag, windTag, humidityTag);
-       
+
+        if (!chosenPlace) {
+
+            // alert("Alert");
+            $('#myModalError').modal('hide');
+            return;
+
+        } else {
             // if statements to show messages in modal box
             if (weatherStatus === "Clouds") {
                 $(".modal-body").text("It's a cloudy day today, you might want to bring a jumper or a light jacket.");
@@ -84,14 +84,16 @@ function showDetails(chosenPlace) {
             } else if (weatherStatus === "Snow") {
                 $(".modal-body").text("It's snowing, wrap up warm and go make some snow angels!");
                 modal.show();
-            } else if (weatherStatus === " "){
+            } else if (weatherStatus === "") {
                 $(".modal-body").text("Uh oh, this field is blank, please enter your chosen location");
                 modal.show();
             } else {
                 $(".modal-body").text("Uh oh, we couldn't find weather details for your chosen location, sorry about that!");
                 modal.show();
             }
+        }
     })
+
 }
 
 // latitute and longitude variable declared outside, so they can change on page reload or when the findLocation is called
@@ -119,6 +121,7 @@ function findLocation(chosenPlace) {
     var baseURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
     var mapURL = baseURL + chosenPlace + '&key=' + mapKey
     console.log(chosenPlace);
+    // if chosen place is not valid - return the data
 
     $.ajax({
         url: mapURL,
@@ -133,6 +136,7 @@ function findLocation(chosenPlace) {
         theMap = new google.maps.Map(mapElement[0], {
             zoom: 13,
             center: { lat: lat, lng: lon },
+            // need to make another API call - so key is needed or error returned 
             key: mapKey
 
         });
@@ -153,51 +157,79 @@ function findLocation(chosenPlace) {
 
     })
 
+    var firstPark;
+
     // lets call the places service for park results
     function callback(results, status) {
+        // This checks the status of the places API rquest
         if (status == google.maps.places.PlacesServiceStatus.OK) {
+
+            // return the results of each park that includes a tourist attraction value from the types object
             for (var i = 0; i < results.length; i++) {
                 if (results[i].types.includes('tourist_attraction')) {
-                    createMarker(results[i].geometry.location);
+                    // call createMarker function and locations and results to the function
+                    createMarker(results[i].geometry.location, results[i]);
+
+                    // name of the first park returned, which we take out and use outside the loop - declare variable outside or not defined
+                    if (!firstPark) {
+                        firstPark = results[i].name;
+                    } 
+
                 }
             }
+            $('#park-container').empty();
+            // Print First park result name
+            var thePark = $('<div id="park-container" class="text-center pt-5 pb-2">');
+            thePark.text('The closest park to this location is ' + firstPark);
+            $('#conditions').after(thePark);
         }
     }
 
-    function createMarker(position) {
+    function createMarker(position, results) {
         // custom icon
         var iconImage = './images/park-time-logo-scaled.png';
-
-        new google.maps.Marker({
+        // creates a new marker object for the map
+        var marker = new google.maps.Marker({
+            // position of the marker comes from the park lat and lon values in the callback
             position: position,
             map: theMap,
             icon: iconImage,
         });
 
+        // call the constructor
+        var infoWindow = new google.maps.InfoWindow({
+            content: results.name
+        });
+
+        // use addListener method for the marker
+        marker.addListener('click', function () {
+            infoWindow.open(theMap, marker);
+        })
+
     }
+
 }
 
 function showPlace() {
     $('#location-search').on('click', function (event) {
         event.preventDefault();
         // pass the user Location on event listener
-        var chosenPlace = getCities()
-        var searchPlace = $("#user-location").val().trim();
-        searchPlace = searchPlace.charAt(0).toUpperCase() + searchPlace.slice(1);
-
-        if (!chosenPlace.includes(searchPlace)) {
-            //This line pushes the new input city into the cities array
-            chosenPlace.push(searchPlace);
-            console.log(chosenPlace);
-            localStorage.setItem("chosenPlace", chosenPlace);
-            // calling renderButtons which handles the processing of our city array
-            addHistory();
-        }
+        var chosenPlace = $("#user-location").val().trim();
+        chosenPlace = chosenPlace.charAt(0).toUpperCase() + chosenPlace.slice(1);
         // clear input field
         $("#user-location").val("");
         showDetails(chosenPlace);
         // upon click, run the function - pass the variable as an argument
         findLocation(chosenPlace);
+
+
+        // clear input field
+        $("#user-location").val("");
+
+        localStorage.setItem("chosenPlace", JSON.stringify(chosenPlace));
+
+
+
     });
 }
 

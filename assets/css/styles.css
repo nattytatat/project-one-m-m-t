@@ -130,7 +130,8 @@ h1 {
 #map {
     background-color: rgb(222, 222, 222);
     width: 100%;
-    height: 100vh;
+    height: 75vh;
+    max-height: 600px;
     border-radius: 15px;
     margin: 0;
 }
@@ -138,6 +139,8 @@ h1 {
 .modal-backdrop {
     background-color: rgba(0,0,0,0.5);
     opacity: 0%;
+    /* have to place the backdrop behind the content otherwise it stops any further use of the page*/
+    z-index: -1;
 }
 
 .modal-content {
@@ -154,4 +157,11 @@ h1 {
     width: 150px;
     display: flex;
     justify-content: space-evenly;
+}
+
+@media (max-width:980px) {
+    #map {
+        height: 50vh;
+        min-height: 400px;
+    }
 }
