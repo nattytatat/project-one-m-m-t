@@ -188,13 +188,13 @@ function findLocation(chosenPlace) {
                 }
             }
             if (typeof firstPark === 'undefined') {
-                $('#park-container').empty();
-                var thePark = $('<div id="park-container" class="text-center pt-5 pb-2">');
+                $('#park-container').remove();
+                var thePark = $('<div id="park-container">');
                 thePark.text('No parks found');
                 $('#conditions').after(thePark);
             } else {
-                $('#park-container').empty();
-                var thePark = $('<div id="park-container" class="text-center pt-5 pb-2">');
+                $('#park-container').remove();
+                var thePark = $('<div id="park-container">');
                 thePark.text('The closest park to this location is ' + firstPark);
                 $('#conditions').after(thePark);
             }
@@ -299,6 +299,7 @@ function addToButtons(chosenPlace) {
 
 // make sure the buttons remain on the page
 addToButtons(savedLocations);
+$("#user-location").val("");
 
 // local storage overrides each time, data should persist
 $('#showModal').on('click', function (event) {
