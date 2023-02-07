@@ -43,7 +43,7 @@ function showDetails(chosenPlace) {
         console.log(weatherStatus)
         // creating image and paragraph tags for weather conditions
         var icon = $("<img>").attr("src", iconUrl);
-        var iconTag = $("<p id='tags'>").append("Set-up", icon);
+        var iconTag = $("<p id='tags'>").append("Status", icon);
         var tempTag = $("<p id='tags'>").text("Temp: " + tempC + " °C");
         var windTag = $("<p id='tags'>").text("Wind: " + wind + " KPH");
         var humidityTag = $("<p id='tags'>").text("Humidity: " + humidity + "%");
@@ -284,7 +284,7 @@ function addToButtons(chosenPlace) {
     for (var i = 0; i < savedLocations.length; i++) {
 
         var theLocation = savedLocations[i];
-        var newBtn = $('<button class="border-0 rounded py-2 px-3 m-1">' + theLocation + '</button>');
+        var newBtn = $('<button class="border-0 rounded py-2 px-3 m-1 newBtn">' + theLocation + '</button>');
         $(newBtn).on('click', function (event) {
             event.preventDefault();
             chosenPlace = $(this).text();

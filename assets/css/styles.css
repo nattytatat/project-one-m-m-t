@@ -23,6 +23,15 @@ h1 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.para {
+    letter-spacing: 0.7px;
+    color: rgb(86, 86, 86);
+}
+
+.secondPara {
+    margin-top: -12px;
+}
+
 #myDate {
     font-size: 14px;
     text-align: center;
@@ -59,6 +68,7 @@ h1 {
     outline: none;
     box-shadow: none;
 }
+
 .my-searchBtn {
     border: solid 1px;
     border-radius: 5px;
@@ -87,6 +97,19 @@ h1 {
     box-shadow: 3px 5px black;
 }
 
+.clearBtn {
+    border: solid 1px !important;
+    border-radius: 5px;
+    padding: 7px auto;
+    text-transform: uppercase;
+    font-size: 14px;
+    background-color: rgb(247, 247, 247) !important;
+    margin-top: 10px !important;
+    color: black;
+    width: 100% !important;
+    letter-spacing: 1px;
+}
+
 .hr {
     border: 0.6px solid black;
 }
@@ -94,11 +117,11 @@ h1 {
 #weather {
     text-align: center;
 }
- 
+
 #tags {
     display: inline-block;
     border: 1px solid black;
-    justify-content:space-between;
+    justify-content: space-between;
     align-items: center;
     padding: 5px;
     margin: 5px;
@@ -125,7 +148,7 @@ h1 {
     align-items: center;
     text-align: center;
     margin-top: -10px;
-} 
+}
 
 .error-text {
     font-size: 10px;
@@ -142,13 +165,14 @@ h1 {
 }
 
 .modal {
-    background-color: rgba(0,0,0,0.25);
+    background-color: rgba(0, 0, 0, 0.25);
 }
 
 .modal-backdrop {
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     opacity: 0%;
 }
+
 .modal-content {
     background-color: rgb(246, 246, 246);
 }
@@ -172,14 +196,46 @@ h1 {
     margin-bottom: 10px;
 }
 
+.newBtn {
+    font-size: 14px;
+    display: flex !important;
+}
+
+.newBtn:hover {
+    background-color: rgb(251, 206, 44);
+    border: 1px solid black;
+    box-shadow: 3px 5px black;
+    color: black;
+}
+
+.newBtn:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+    border: 1px solid black;
+    box-shadow: 3px 5px black;
+}
+
 #clear-button {
     background-color: beige;
     opacity: 100%;
     display: inline;
     justify-content: space-evenly;
     border: solid 2px;
-    border-radius: 5px; 
+    border-radius: 5px;
     margin-top: 15px;
+}
+
+.myFooter {
+    /* background-color: rgb(176, 249, 242); */
+    background-color: rgb(230, 247, 253);
+    padding: 10px;
+    margin-bottom: 0px;
+}
+
+.footerPara {
+    color: black;
+    padding-top: 20px;
 }
 
 @media (max-width:980px) {
