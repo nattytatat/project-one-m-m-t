@@ -175,7 +175,7 @@ h1 {
 #clear-button {
     background-color: beige;
     opacity: 100%;
-    width: 150px;
+    display: inline;
     justify-content: space-evenly;
     border: solid 2px;
     border-radius: 5px; 
