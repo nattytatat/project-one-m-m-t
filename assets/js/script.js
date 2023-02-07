@@ -1,17 +1,19 @@
-var chosenPlace;
+// var chosenPlace;
 // adding date and time
 var today = moment().format("dddd • DD/MM/YYYY • h:mm a");
 $("#myDate").text(today);
 var theYear = moment().format('YYYY');
 $('.footer-content').append(theYear);
+// Saved History Buttons
+var buttonContainer = $('<div class="d-flex flex-wrap justify-content-around align-items-stretch mt-4">');
+$('#todays-date').after(buttonContainer);
 
-// local storage set outside the function to prevent it running the same for each button
-var savedPlaces = JSON.parse(localStorage.getItem("chosenPlace")) || [];
+var savedLocations = JSON.parse(localStorage.getItem("Saved-Locations")) || [];
 
 // adding modal variable
 var modal = $("#myModal");
 
-function showDetails(chosenPlace, getGif) {
+function showDetails(chosenPlace) {
     // clearing section with chosen place weather
     $("#weather").empty();
     $("#conditions").empty();
@@ -19,7 +21,8 @@ function showDetails(chosenPlace, getGif) {
     var placeName = $("<p id='placeName'>").text(chosenPlace);
     $("#weather").append(placeName);
     // openweather API url 
-    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + chosenPlace + "&appid=e3fca67d9cc333a831026c5f07c8ba92";
+    // var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + chosenPlace + "&appid=e3fca67d9cc333a831026c5f07c8ba92";
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + '&lon=' + lon + "&appid=e3fca67d9cc333a831026c5f07c8ba92";
 
     $.ajax({
         url: queryURL,
@@ -44,56 +47,56 @@ function showDetails(chosenPlace, getGif) {
 
         // appending to the website
         $("#conditions").append(iconTag, tempTag, windTag, humidityTag);
-        
+
         addGif(weatherStatus);
-        
+
         // gif creator
-        function addGif(weatherStatus, message){
-            // use the weatherQuery from openweather map and pass to new search term
+        function addGif(weatherStatus) {
+            // use the weatherQuery from openweather map for giphy endpoint
             var searchQuery = weatherStatus;
-            var getGifURL = "https://api.giphy.com/v1/gifs/search?api_key=BPd0QG7nbi7fxVY0KXbCN3Lg4OEQ0YNZ&q=" + searchQuery + "&limit=1&offset=0&rating=g&lang=en";
+            var getGifURL = "https://api.giphy.com/v1/gifs/search?api_key=BPd0QG7nbi7fxVY0KXbCN3Lg4OEQ0YNZ&q=weather+" + searchQuery + "&limit=1&offset=0&rating=g&lang=en";
 
             $.ajax({
                 url: getGifURL,
                 method: 'GET'
-            }).then (function(result){
+            }).then(function (result) {
                 var gifUrl = result.data[0].images.original.url;
-                var gifImage = $('<img>').attr('src', gifUrl);
+                var gifImage = $('<img class="gif-image">').attr('src', gifUrl);
                 $(".modal-body").prepend(gifImage);
-                $(".modal-body").text(message);
+                // $(".modal-body").text(message);
             })
         }
-            // if statements to show messages in modal box
-            if (weatherStatus === "Clouds") {
-                // $(".modal-body").text("It's a cloudy day today, you might want to bring a jumper or a light jacket.");
-                addGif(weatherStatus, "It's a cloudy day today, you might want to bring a jumper or a light jacket.");
-                modal.show();
-            } else if (weatherStatus === "Fog") {
-                $(".modal-body").text("It's a foggy day today, it's best to stay indoors.");
-                modal.show();
-            } else if (weatherStatus === "Clear") {
-                $(".modal-body").text("The sky is clear today, it's the perfect weather to go to the park.");
-                modal.show();
-            } else if (weatherStatus === "Rain") {
-                $(".modal-body").text("Uh oh, it looks like rain, grab a raincoat and wellies, or stay indoors with a cuppa.");
-                modal.show();
-            } else if (weatherStatus === "Thunderstorm") {
-                $(".modal-body").text("There's a thunderstorm coming, stay home and stay safe.");
-                modal.show();
-            } else if (weatherStatus === "Drizzle") {
-                $(".modal-body").text("It's drizzling today, grab a light jacket and an umbrella.");
-                modal.show();
-            } else if (weatherStatus === "Snow") {
-                $(".modal-body").text("It's snowing, wrap up warm and go make some snow angels!");
-                modal.show();
-            } else if (weatherStatus === "") {
-                $(".modal-body").text("Uh oh, this field is blank, please enter your chosen location");
-                modal.show();
-            } else {
-                $(".modal-body").text("Uh oh, we couldn't find weather details for your chosen location, sorry about that!");
-                modal.show();
-            }
-        
+        // if statements to show messages in modal box
+        if (weatherStatus === "Clouds") {
+            $(".modal-body").text("It's a cloudy day today, you might want to bring a jumper or a light jacket.");
+            // addGif(weatherStatus, "It's a cloudy day today, you might want to bring a jumper or a light jacket.");
+            modal.show();
+        } else if (weatherStatus === "Fog") {
+            $(".modal-body").text("It's a foggy day today, it's best to stay indoors.");
+            modal.show();
+        } else if (weatherStatus === "Clear") {
+            $(".modal-body").text("The sky is clear today, it's the perfect weather to go to the park.");
+            modal.show();
+        } else if (weatherStatus === "Rain") {
+            $(".modal-body").text("Uh oh, it looks like rain, grab a raincoat and wellies, or stay indoors with a cuppa.");
+            modal.show();
+        } else if (weatherStatus === "Thunderstorm") {
+            $(".modal-body").text("There's a thunderstorm coming, stay home and stay safe.");
+            modal.show();
+        } else if (weatherStatus === "Drizzle") {
+            $(".modal-body").text("It's drizzling today, grab a light jacket and an umbrella.");
+            modal.show();
+        } else if (weatherStatus === "Snow") {
+            $(".modal-body").text("It's snowing, wrap up warm and go make some snow angels!");
+            modal.show();
+        } else if (weatherStatus === "") {
+            $(".modal-body").text("Uh oh, this field is blank, please enter your chosen location");
+            modal.show();
+        } else {
+            $(".modal-body").text("Uh oh, we couldn't find weather details for your chosen location, sorry about that!");
+            modal.show();
+        }
+
     })
 
 }
@@ -112,6 +115,7 @@ function showMap() {
     var theMap = new google.maps.Map(mapElement[0], {
         zoom: 11,
         center: { lat: lat, lng: lon },
+        icons: null
     })
 }
 
@@ -133,6 +137,8 @@ function findLocation(chosenPlace) {
         lat = result.results[0].geometry.location.lat;
         lon = result.results[0].geometry.location.lng;
 
+        showDetails(chosenPlace, lat, lon);
+
         console.log('lat: ' + lat + 'lon: ' + lon);
         // change the map to new location
         theMap = new google.maps.Map(mapElement[0], {
@@ -143,16 +149,16 @@ function findLocation(chosenPlace) {
 
         });
 
-        // enter places request for the newly created map
+        // using the location, pass the type to the callback function
         var request = {
-            //this passes both the lat and lon values - could be used for the above center object
+            // the location passes both lat and lon values
             location: result.results[0].geometry.location,
             // in meters
             radius: '4000',
             type: 'park',
         };
 
-        // make a call to the placesService, passing through the displayed map
+        // make a call to the placesService, passing through the our map
         service = new google.maps.places.PlacesService(theMap);
         // performs a nearby search from users query - https://developers.google.com/maps/documentation/javascript/places#place_search_requests -
         service.nearbySearch(request, callback);
@@ -161,7 +167,7 @@ function findLocation(chosenPlace) {
 
     var firstPark;
 
-    // lets call the places service for park results
+    // call the places service for park results
     function callback(results, status) {
         // This checks the status of the places API rquest
         if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -174,16 +180,21 @@ function findLocation(chosenPlace) {
 
                     // name of the first park returned, which we take out and use outside the loop - declare variable outside or not defined
                     if (!firstPark) {
-                        firstPark = results[i].name;
-                    } 
-
+                        var firstPark = results[i].name;
+                    }
                 }
             }
-            $('#park-container').empty();
-            // Print First park result name
-            var thePark = $('<div id="park-container" class="text-center pt-5 pb-2">');
-            thePark.text('The closest park to this location is ' + firstPark);
-            $('#conditions').after(thePark);
+            if (typeof firstPark === 'undefined') {
+                $('#park-container').empty();
+                var thePark = $('<div id="park-container" class="text-center pt-5 pb-2">');
+                thePark.text('No parks found');
+                $('#conditions').after(thePark);
+            } else {
+                $('#park-container').empty();
+                var thePark = $('<div id="park-container" class="text-center pt-5 pb-2">');
+                thePark.text('The closest park to this location is ' + firstPark);
+                $('#conditions').after(thePark);
+            }
         }
     }
 
@@ -212,48 +223,78 @@ function findLocation(chosenPlace) {
 
 }
 
-function showPlace() {
-    $('#location-search').on('click', function (event) {
-        event.preventDefault();
-        // pass the user Location on event listener
-        var chosenPlace = $("#user-location").val().trim();
-        chosenPlace = chosenPlace.charAt(0).toUpperCase() + chosenPlace.slice(1);
+$('#location-search').on('click', function (event) {
+    event.preventDefault();
+    // pass the user Location on event listener
+    var chosenPlace = $("#user-location").val().trim();
+    chosenPlace = chosenPlace.charAt(0).toUpperCase() + chosenPlace.slice(1);
 
-        // // to show modal when no location provided
-        // if (chosenPlace === "") {
-        //     // alert("Alert");
-        //     $('#myModalError').modal('hide');
-        //     return;
-        // } else {
-        //     $('#myModalError').modal('show');
-        // }
-        // // end of modal
-
-        if (chosenPlace === "") {
-            var error = $('<p class="error-text text-danger m-0">');
-            error.text('Please enter a valid location');
-            $('#user-location').after(error);
-            return;
-        } 
-
-
-        // Need to add condition - if both results are valid then run - if not, return to empty input and error message - 'please enter a valid location'
-        showDetails(chosenPlace);
-        // upon click, run the function - pass the variable as an argument
-        findLocation(chosenPlace);
-
-        // clear input field
-        $("#user-location").val("");
+    if (chosenPlace === "") {
         $('.error-text').empty();
+        var error = $('<p class="error-text text-danger m-0">');
+        error.text('Please enter a valid location');
+        $('#user-location').after(error);
+        return;
+    } else if (savedLocations.includes(chosenPlace)) {
+        // error for already saved location
+        $('.error-text').empty();
+        var error = $('<p class="error-text text-danger m-0">');
+        error.text('You have already entered this location');
+        $('#user-location').after(error);
+        return;
+    } else {
+        // push the input to the local storage array
+        savedLocations.push(chosenPlace);
+        // run history button function
+        addToButtons(chosenPlace);
+    }
 
-        localStorage.setItem("chosenPlace", JSON.stringify(chosenPlace));
+    // Need to add condition - if both results are valid then run - if not, return to empty input and error message - 'please enter a valid location'
+    // showDetails(chosenPlace);
+    // upon click, run the function - pass the variable as an argument
+    findLocation(chosenPlace);
 
 
 
-    });
+    // clear input field
+    $("#user-location").val("");
+    $('.error-text').empty();
+
+});
+
+
+function addToButtons(chosenPlace) {
+
+    // limit buttons to 3
+    while (savedLocations.length > 3) {
+        // remove the oldest button
+        var removeLocation = savedLocations.shift();
+        // remove from the storage array
+        localStorage.removeItem(removeLocation);
+    }
+
+    localStorage.setItem("Saved-Locations", JSON.stringify(savedLocations));
+
+    buttonContainer.empty();
+
+    for (var i = 0; i < savedLocations.length; i++) {
+
+        var theLocation = savedLocations[i];
+        var newBtn = $('<button class="border-0 rounded py-2 px-3 m-1">' + theLocation + '</button>');
+        $(newBtn).on('click', function (event) {
+            event.preventDefault();
+            chosenPlace = $(this).text();
+            showDetails(chosenPlace);
+            findLocation(chosenPlace);
+        });
+
+        buttonContainer.append(newBtn);
+    }
+
 }
 
-showPlace();
+// make sure the buttons remain on the page
+addToButtons(savedLocations);
 
 // local storage overrides each time, data should persist
 $('#showModal').on('click', function (event) {
