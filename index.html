@@ -21,9 +21,8 @@
     <header class="text-center p-2 my-header">
         <img src="./images/park-time-logo.png" class="align-top my-logo" alt="Park Time logo">
         <h1 class="mb-4">Park Time</h1>
-        <p class="text-center">Use this app to find a park near you and check the current weather conditions.<br>
-            Not sure what to do next? Our park weather tips can guide you!</p>
-        <p><Strong>Search using the form below</strong></p>
+        <p class="text-center para">Use this app to find a park near you and check the current weather conditions.<br>
+        <p class="para secondPara"><Strong>Search using the form below</strong></p>
     </header>
 
     <!-- Weather Modal -->
@@ -63,9 +62,9 @@
                         <p id="myDate"></p>
                     </div>
                     <div id="search-history"></div>
-                    <button type="submit" class="btn search-button" id="clear-button" aria-label="submit search">
-                        Clear Search History
-                      </button>
+                    <button type="submit" class="btn search-button clearBtn" id="clear-button" aria-label="submit search">
+                        Clear Search
+                    </button>
                     <hr class="hr" />
                 </form>
 
@@ -80,9 +79,10 @@
         </div>
     </div>
 
+    <footer class="mt-5 container-fluid  myFooter">
+        <p class="footer-content text-center footerPara">All the time should be <strong>Park Time</strong> | &copy; M M T </p>
+    </footer>
 
-
-    <footer class="mt-5 container-fluid"><p class="footer-content text-center">All the time should be <strong>Park Time</strong> | &copy; M M T  </p></footer>
 
     <!-- Moment.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
