@@ -26,38 +26,17 @@
         <p><Strong>Search using the form below</strong></p>
     </header>
 
-
-    <!-- Error Modal -->
-    <!-- <div class="modal" id="myModalError">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"> Alert </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="#modal-text" class="modal-body">
-                    You need to add a location.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="showModalError" data-dismiss="modal">OK</button>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
     <!-- Weather Modal -->
     <div class="modal new class" id="myModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">⚠️ Alert </h5>
+                    <h5 class="modal-title">It looks like:</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div id="#modal-text" class="modal-body">
+                <div id="#modal-text" class="modal-body d-flex flex-column">
                     You need to add a location.
                 </div>
                 <div class="modal-footer">
@@ -80,21 +59,18 @@
                                 data-toggle="modal">Search</button>
                         </div>
                     </div>
-                    <div>
+                    <div id="todays-date">
                         <p id="myDate"></p>
                     </div>
-                    <div>
                     <div id="search-history"></div>
                     <button type="submit" class="btn search-button" id="clear-button" aria-label="submit search">
                         Clear Search History
                       </button>
-                </div>
                     <hr class="hr" />
                 </form>
 
                 <div id="weather"></div>
                 <div id="conditions"></div>
-                <div id="history"></div>
             </aside>
 
             <!-- map section -->

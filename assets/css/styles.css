@@ -141,13 +141,14 @@ h1 {
     margin: 0;
 }
 
+.modal {
+    background-color: rgba(0,0,0,0.25);
+}
+
 .modal-backdrop {
     background-color: rgba(0,0,0,0.5);
     opacity: 0%;
-    /* have to place the backdrop behind the content otherwise it stops any further use of the page*/
-    z-index: -1;
 }
-
 .modal-content {
     background-color: rgb(246, 246, 246);
 }
@@ -164,14 +165,11 @@ h1 {
     justify-content: space-evenly;
 }
 
-.place-history {
-    background-color: rgb(191, 191, 191);
-    opacity: 100%;
-    width: 150px;
-    justify-content: space-evenly;
-    border-radius: 5px; 
-    margin-top: 15px;
-    margin-left: 5px;
+.gif-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    margin-bottom: 10px;
 }
 
 #clear-button {
