@@ -92,6 +92,19 @@ h1 {
     box-shadow: 3px 5px black;
 }
 
+.clearBtn {
+    border: solid 1px !important;
+    border-radius: 5px;
+    padding: 7px auto;
+    text-transform: uppercase;
+    font-size: 14px;
+    background-color: rgb(247, 247, 247) !important;
+    margin-top: 10px !important;
+    color: black;
+    width: 100% !important;
+    letter-spacing: 1px;
+}
+
 .hr {
     border: 0.6px solid black;
 }
