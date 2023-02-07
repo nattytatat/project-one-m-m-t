@@ -7,7 +7,7 @@ $('.footer-content').append(theYear);
 var clearButton = $("#clear-button");
 clearButton.hide();
 // local storage set outside the function to prevent it running the same for each button
-var savedPlaces = JSON.parse(localStorage.getItem("chosenPlace")) || [];
+var savedPlaces = JSON.parse(localStorage.getItem("chosenPlace"));
 
 // adding modal variable
 var modal = $("#myModal");
@@ -223,7 +223,8 @@ function showPlace() {
         $("#user-location").val("");
         $('.error-text').empty();
 
-        localStorage.setItem("chosenPlace", JSON.stringify(chosenPlace));
+        localStorage.setItem("chosenPlace", chosenPlace);
+        
 
         var a = $("<button>");
         // Adding a class
@@ -234,7 +235,6 @@ function showPlace() {
         a.text(chosenPlace);
         // Adding the button to the HTML
         $("#search-history").append(a);
-
         clearButton.show();
     });
 }
