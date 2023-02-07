@@ -208,6 +208,14 @@ h1 {
     color: black;
 }
 
+.newBtn:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+    border: 1px solid black;
+    box-shadow: 3px 5px black;
+}
+
 #clear-button {
     background-color: beige;
     opacity: 100%;
