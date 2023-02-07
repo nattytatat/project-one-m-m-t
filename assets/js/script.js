@@ -13,6 +13,9 @@ var savedLocations = JSON.parse(localStorage.getItem("Saved-Locations")) || [];
 // adding modal variable
 var modal = $("#myModal");
 
+var clearButton = $("#clear-button");
+clearButton.hide();
+
 function showDetails(chosenPlace) {
     // clearing section with chosen place weather
     $("#weather").empty();
@@ -247,6 +250,7 @@ $('#location-search').on('click', function (event) {
         savedLocations.push(chosenPlace);
         // run history button function
         addToButtons(chosenPlace);
+        clearButton.show();
     }
 
     // Need to add condition - if both results are valid then run - if not, return to empty input and error message - 'please enter a valid location'
@@ -300,3 +304,9 @@ addToButtons(savedLocations);
 $('#showModal').on('click', function (event) {
     modal.hide()
 })
+
+//clicking this button clears search history and clears local storage
+$("#clear-button").on("click", function() {
+    window.localStorage.clear();
+    $(".city-history").hide();
+     });
