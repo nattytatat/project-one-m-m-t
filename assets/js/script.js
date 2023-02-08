@@ -290,8 +290,8 @@ function addToButtons(chosenPlace) {
         $(newBtn).on('click', function (event) {
             event.preventDefault();
             chosenPlace = $(this).text();
-            showDetails(chosenPlace);
             findLocation(chosenPlace);
+            showDetails(chosenPlace);
         });
 
         buttonContainer.append(newBtn);
@@ -309,7 +309,7 @@ $('#showModal').on('click', function (event) {
 })
 
 //clicking this button clears search history and clears local storage
-$("#clear-button").on("click", function() {
+$("#clear-button").on("click", function () {
     window.localStorage.clear();
     $(".city-history").hide();
-     });
+});
