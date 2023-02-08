@@ -173,16 +173,26 @@ h1 {
     opacity: 0%;
 }
 
+.modal-header{
+    text-align: center !important;
+    display: flex;
+    justify-content: space-evenly;
+    text-transform: uppercase;
+    color: rgb(40, 40, 40);
+    letter-spacing: 1px;
+}
+
 .modal-content {
     background-color: rgb(246, 246, 246);
 }
 
-.modal-footer {
-    text-align: center;
+.modal-body {
+    text-align: center !important;
+    font-size: 18px;
 }
 
 .modalBtn {
-    background-color: black;
+    background-color: black !important;
     opacity: 100%;
     width: 150px;
     display: flex;
@@ -194,6 +204,12 @@ h1 {
     height: 300px;
     object-fit: cover;
     margin-bottom: 10px;
+}
+
+.modal-footer {
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .newBtn {
@@ -226,11 +242,13 @@ h1 {
     margin-top: 15px;
 }
 
+
 #park-container {
     text-align: center;
     padding-top: 20px;
     padding-bottom: 10px;
-}
+    }
+
 .myFooter {
     /* background-color: rgb(176, 249, 242); */
     background-color: rgb(230, 247, 253);
@@ -241,6 +259,7 @@ h1 {
 .footerPara {
     color: black;
     padding-top: 20px;
+
 }
 
 @media (max-width:980px) {
