@@ -239,6 +239,7 @@ $('#location-search').on('click', function (event) {
         var error = $('<p class="error-text text-danger m-0">');
         error.text('Please enter a valid location');
         $('#user-location').after(error);
+        $("#user-location").val("");
         return;
     } else if (savedLocations.includes(chosenPlace)) {
         // error for already saved location
@@ -246,6 +247,7 @@ $('#location-search').on('click', function (event) {
         var error = $('<p class="error-text text-danger m-0">');
         error.text('You have already entered this location');
         $('#user-location').after(error);
+        $("#user-location").val("");
         return;
     } else {
         // push the input to the local storage array
