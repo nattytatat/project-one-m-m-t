@@ -177,8 +177,9 @@ h1 {
     background-color: rgb(246, 246, 246);
 }
 
-.modal-footer {
-    text-align: center;
+.modal-body {
+    text-align: center !important;
+    font-size: 18px;
 }
 
 .modalBtn {
