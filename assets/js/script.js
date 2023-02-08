@@ -14,7 +14,9 @@ var savedLocations = JSON.parse(localStorage.getItem("Saved-Locations")) || [];
 var modal = $("#myModal");
 
 var clearButton = $("#clear-button");
-clearButton.hide();
+if (savedLocations.length == 0) {
+    clearButton.hide();
+}
 
 function showDetails(chosenPlace) {
     // clearing section with chosen place weather
